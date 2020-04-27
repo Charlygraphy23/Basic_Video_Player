@@ -259,6 +259,10 @@ public class MediaController extends Window {
                     slider.setValue(newValue.toSeconds());
                 }
             });
+
+
+            volumeSlider.setValue(player.getMediaPlayer().getVolume() * 100);
+
         }
     }
 }

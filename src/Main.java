@@ -1,5 +1,3 @@
-package sample;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.BoundingBox;
@@ -14,7 +12,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("view/mediaview.fxml")));
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/sample/view/mediaview.fxml")));
 
         primaryStage.setScene(scene);
         primaryStage.show();
