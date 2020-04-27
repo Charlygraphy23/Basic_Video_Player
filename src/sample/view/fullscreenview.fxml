@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXSlider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.media.MediaView?>
+
+<AnchorPane fx:id="pane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.FullScreenController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <MediaView fx:id="mv" fitHeight="200.0" fitWidth="200.0" />
+         </children>
+      </HBox>
+      <JFXSlider fx:id="slider" layoutX="37.0" layoutY="341.0" prefHeight="18.0" prefWidth="526.0" visible="false" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="37.0" />
+      <JFXSlider fx:id="volumeslider" layoutX="554.0" layoutY="89.0" orientation="VERTICAL" visible="false" AnchorPane.bottomAnchor="171.0" AnchorPane.rightAnchor="28.0" />
+   </children>
+</AnchorPane>
