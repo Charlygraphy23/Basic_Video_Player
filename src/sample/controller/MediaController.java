@@ -115,10 +115,6 @@ public class MediaController extends Window {
         });
 
 
-//        if(mediaPlayer!=null)
-//            mv.setMediaPlayer(mediaPlayer.getMediaPlayer());
-
-
 
 
 
@@ -139,16 +135,23 @@ public class MediaController extends Window {
 
                 mv.fitWidthProperty().bind(mediaBoundary.widthProperty());
                 mv.fitHeightProperty().bind(mediaBoundary.heightProperty());
+                slider.setMin(0.0);
+                slider.maxProperty().bind(Bindings.createDoubleBinding(()-> mediaPlayer.getMediaPlayer().getTotalDuration().toSeconds(),mediaPlayer.getMediaPlayer().totalDurationProperty()));
+
+
             }
+
+
+
 
             mediaPlayer.getMediaPlayer().currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                    slider.setValue(newValue.toSeconds());
-                }
+                    slider.setValue(newValue.toSeconds());                }
 
             });
             slider.setValue(0);
+
             volumeSlider.setValue(mediaPlayer.getMediaPlayer().getVolume() * 100);
 
         });
@@ -156,6 +159,14 @@ public class MediaController extends Window {
        slider.setOnMousePressed(e->{
            mediaPlayer.getMediaPlayer().seek(Duration.seconds(slider.getValue()));
        });
+
+
+//      slider.valueProperty().addListener(new ChangeListener<Number>() {
+//          @Override
+//          public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//              mediaPlayer.getMediaPlayer().seek(Duration.seconds(newValue.doubleValue()));
+//          }
+//      });
 
        mv.setOnDragOver(e->{
          if(e.getDragboard().hasFiles()){
@@ -180,6 +191,8 @@ public class MediaController extends Window {
 
                mv.fitWidthProperty().bind(mediaBoundary.widthProperty());
                mv.fitHeightProperty().bind(mediaBoundary.heightProperty());
+               slider.maxProperty().bind(Bindings.createDoubleBinding(()-> mediaPlayer.getMediaPlayer().getTotalDuration().toSeconds(),mediaPlayer.getMediaPlayer().totalDurationProperty()));
+
            }
 
 
@@ -223,25 +236,30 @@ public class MediaController extends Window {
             mediaPlayer.getMediaPlayer().setVolume(volumeSlider.getValue() / 100);
         });
 
-        fullScreenButton.setOnAction(e->{
+//        fullScreenButton.setOnAction(e->{
+//
+//            Stage stage=(Stage) fullScreenButton.getScene().getWindow();
+//            if(stage.isFullScreen()){
+//                stage.setFullScreen(false);
+//
+//                mv.fitWidthProperty().bind(mediaBoundary.widthProperty());
+//                mv.fitHeightProperty().bind(mediaBoundary.heightProperty());
+//
+//            }
+//            else {
+//
+//                mv.fitWidthProperty().bind(pane.widthProperty());
+//                mv.fitHeightProperty().bind(pane.heightProperty());
+//                stage.setFullScreen(true);
+//            }
+//        });
 
-            Stage stage=(Stage) fullScreenButton.getScene().getWindow();
-            if(stage.isFullScreen()){
-                stage.setFullScreen(false);
+    }               // End of Initialize
+    //
+    //
+    //
+    //
 
-                mv.fitWidthProperty().bind(mediaBoundary.widthProperty());
-                mv.fitHeightProperty().bind(mediaBoundary.heightProperty());
-
-            }
-            else {
-
-                mv.fitWidthProperty().bind(pane.widthProperty());
-                mv.fitHeightProperty().bind(pane.heightProperty());
-                stage.setFullScreen(true);
-            }
-        });
-
-    }
 
     public void getPlayer(MPlayer player) {
 
@@ -262,7 +280,7 @@ public class MediaController extends Window {
 
 
             volumeSlider.setValue(player.getMediaPlayer().getVolume() * 100);
-
+           slider.maxProperty().bind(Bindings.createDoubleBinding(()-> mediaPlayer.getMediaPlayer().getTotalDuration().toSeconds(),mediaPlayer.getMediaPlayer().totalDurationProperty()));
         }
     }
 }

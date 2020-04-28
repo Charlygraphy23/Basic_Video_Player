@@ -5,6 +5,8 @@ import com.sun.xml.internal.fastinfoset.util.DuplicateAttributeVerifier;
 import javafx.animation.PauseTransition;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -14,6 +16,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -23,7 +26,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.model.MPlayer;
 
-import javax.script.Bindings;
 import java.io.IOException;
 
 public class FullScreenController {
@@ -43,7 +45,20 @@ public class FullScreenController {
 
     @FXML
     void initialize(MPlayer player) {
+        slider.maxProperty().bind(Bindings.createDoubleBinding(()->player.getMediaPlayer().getTotalDuration().toSeconds(),player.getMediaPlayer().totalDurationProperty()));
+
+
+        player.getMediaPlayer().currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                slider.setTooltip(new Tooltip((int) newValue.toHours()+"."+(int) newValue.toMinutes() % 60 +"."+ (int) newValue.toSeconds() % 3600));
+
+            }
+        });
+
         volumeslider.setValue(player.getMediaPlayer().getVolume() * 100);
+
+
         mv.setOnMouseMoved(e->{
             slider.setVisible(true);
             volumeslider.setVisible(true);
